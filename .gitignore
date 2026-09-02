@@ -1,7 +1,5 @@
 /.phpunit.cache
 /node_modules
-/app/node_modules
-/app/dist
 /public/build
 /public/hot
 /public/storage
@@ -27,3 +25,8 @@ storage/*
 
 /backups
 /database/ci.sqlite
+
+# Proyek React + API mandiri (folder react/, terpisah dari Laravel)
+/react/node_modules
+/react/dist
+/react/*.local

@@ -1,0 +1,5 @@
+# Dependensi dan hasil build proyek React (dibuat di sini agar folder
+# react/ tetap mandiri bila dipisah ke repository lain)
+node_modules/
+dist/
+*.local

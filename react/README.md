@@ -1,12 +1,14 @@
 # SiHadir — React + API PHP mandiri
 
-Folder ini berisi target migrasi bertahap aplikasi absensi RSUD Malangbong:
+Folder `react/` di root repository berisi target migrasi bertahap aplikasi
+absensi RSUD Malangbong. Folder ini berdiri sendiri dan tidak berada di dalam
+`app/` milik Laravel:
 
-- frontend React JS/Vite di `app/src/`;
-- seluruh backend baru dalam **satu file**, `app/backend.php`;
-- konfigurasi deployment, backup, dan health check di `app/deploy/`;
-- pengujian frontend/API client di `app/src/test/` dan smoke test HTTP di
-  `app/tests/api-smoke.mjs`.
+- frontend React JS/Vite di `react/src/`;
+- seluruh backend baru dalam **satu file**, `react/backend.php`;
+- konfigurasi deployment, backup, dan health check di `react/deploy/`;
+- pengujian frontend/API client di `react/src/test/` dan smoke test HTTP di
+  `react/tests/api-smoke.mjs`.
 
 Kode Laravel/Livewire lama tetap dipertahankan di repository sebagai jalur
 rollback sampai cut-over produksi disetujui. Rincian dependensi data dan urutan
@@ -81,14 +83,14 @@ API_ALLOWED_ORIGINS=http://localhost:5173
 Jalankan API dari terminal pertama:
 
 ```bash
-cd app
+cd react
 php -S 0.0.0.0:8080
 ```
 
 Jalankan React dari terminal kedua:
 
 ```bash
-cd app
+cd react
 cp .env.example .env.local
 npm ci
 npm run dev -- --host 0.0.0.0
@@ -104,7 +106,7 @@ berisi akun, kelola akun dari menu **Data Pengguna**.
 
 ## Environment
 
-Frontend membaca `app/.env.local`:
+Frontend membaca `react/.env.local`:
 
 ```env
 VITE_API_URL=/backend.php
@@ -126,7 +128,7 @@ menggunakan `API_ALLOWED_ORIGINS=*` di produksi.
 ## Pengujian
 
 ```bash
-cd app
+cd react
 npm ci
 npm test                    # Vitest + Testing Library
 npm run build               # build produksi
@@ -138,7 +140,7 @@ Smoke test API memerlukan database test yang sudah dimigrasikan/di-seed dan API
 lokal yang aktif:
 
 ```bash
-cd app
+cd react
 php -S 127.0.0.1:8080 >/tmp/absensi-api.log 2>&1 &
 API_URL=http://127.0.0.1:8080/backend.php node tests/api-smoke.mjs
 ```
@@ -151,12 +153,12 @@ Node.js 22.
 ## Build dan deployment produksi
 
 ```bash
-cd app
+cd react
 npm ci
 npm run build
 ```
 
-Hasil build berada di `app/dist/` dan tidak dimasukkan ke Git. Gunakan salah satu
+Hasil build berada di `react/dist/` dan tidak dimasukkan ke Git. Gunakan salah satu
 contoh vhost berikut, lalu sesuaikan domain, root repository, sertifikat HTTPS,
 dan socket PHP-FPM:
 
@@ -168,7 +170,7 @@ PHP-FPM, dan memberi fallback React Router ke `index.html`. Untuk deployment
 frontend/API beda domain, build dengan `VITE_API_URL` absolut dan masukkan origin
 frontend persis ke `API_ALLOWED_ORIGINS`.
 
-Pastikan user PHP-FPM dapat menulis ke `storage/app/public` dan `storage/logs`,
+Pastikan user PHP-FPM dapat menulis ke `storage/react/public` dan `storage/logs`,
 tetapi `.env`, database SQLite, source PHP, dan folder backup tidak disajikan
 sebagai file statis.
 
@@ -177,17 +179,17 @@ sebagai file statis.
 Sebelum cut-over atau perubahan skema:
 
 ```bash
-BACKUP_DIR=/srv/backup/absensi app/deploy/backup.sh
+BACKUP_DIR=/srv/backup/absensi react/deploy/backup.sh
 ```
 
-Skrip mencadangkan database SQLite atau dump MySQL, `storage/app/public`, dan
+Skrip mencadangkan database SQLite atau dump MySQL, `storage/react/public`, dan
 snapshot `.env` ke arsip bertimestamp. Simpan backup di lokasi terenkripsi di
 luar web root dan lakukan uji restore.
 
 Health check:
 
 ```bash
-app/deploy/healthcheck.sh 'https://absensi.example.go.id/backend.php?route=health'
+react/deploy/healthcheck.sh 'https://absensi.example.go.id/backend.php?route=health'
 ```
 
 Endpoint sehat mengembalikan `status: ok` dan status koneksi database. Jalankan

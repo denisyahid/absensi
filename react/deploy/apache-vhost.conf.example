@@ -1,15 +1,15 @@
 <VirtualHost *:80>
     ServerName absensi.example.go.id
-    DocumentRoot /var/www/absensi/app/dist
+    DocumentRoot /var/www/absensi/react/dist
 
-    <Directory /var/www/absensi/app/dist>
+    <Directory /var/www/absensi/react/dist>
         Options -Indexes
         AllowOverride None
         Require all granted
         FallbackResource /index.html
     </Directory>
 
-    Alias /backend.php /var/www/absensi/app/backend.php
+    Alias /backend.php /var/www/absensi/react/backend.php
     <FilesMatch "^backend\.php$">
         Require all granted
         SetHandler "proxy:unix:/run/php/php8.3-fpm.sock|fcgi://localhost/"

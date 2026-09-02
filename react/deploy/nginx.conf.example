@@ -2,13 +2,13 @@ server {
     listen 80;
     server_name absensi.example.go.id;
 
-    root /var/www/absensi/app/dist;
+    root /var/www/absensi/react/dist;
     index index.html;
     client_max_body_size 12m;
 
     location = /backend.php {
         include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME /var/www/absensi/app/backend.php;
+        fastcgi_param SCRIPT_FILENAME /var/www/absensi/react/backend.php;
         fastcgi_param SCRIPT_NAME /backend.php;
         fastcgi_pass unix:/run/php/php8.3-fpm.sock;
     }
