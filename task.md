@@ -4,10 +4,10 @@ Terakhir diperbarui: **2 September 2026**
 
 ## Status akhir implementasi
 
-Implementasi aplikasi baru di folder `app/` **telah selesai untuk seluruh ruang
+Implementasi aplikasi baru di folder `react/` **telah selesai untuk seluruh ruang
 lingkup kode yang ditemukan pada aplikasi Laravel lama**. Frontend menggunakan
 React JS, sedangkan seluruh backend baru berada dalam satu file
-`app/backend.php` dan tidak melakukan bootstrap Laravel.
+`react/backend.php` dan tidak melakukan bootstrap Laravel.
 
 Migrasi tetap dilakukan bertahap: source Laravel/Livewire lama dan tabel lama
 belum dihapus supaya rollback masih aman saat staging/cut-over. Menyimpan jalur
@@ -17,9 +17,9 @@ rollback ini adalah keputusan transisi, bukan fitur migrasi yang tertunda.
 
 ### Fondasi dan arsitektur
 
-- [x] Membuat frontend React JS berbasis Vite langsung di `app/src`.
+- [x] Membuat frontend React JS berbasis Vite langsung di `react/src`.
 - [x] Membuat keseluruhan backend baru dalam **satu file PHP**,
-  `app/backend.php`.
+  `react/backend.php`.
 - [x] Memisahkan frontend/backend melalui API JSON dengan Bearer token.
 - [x] Memakai skema database Laravel lama melalui PDO tanpa bootstrap Laravel.
 - [x] Mendukung SQLite, MySQL, dan MariaDB dari `.env` root.
@@ -105,16 +105,16 @@ rollback ini adalah keputusan transisi, bukan fitur migrasi yang tertunda.
 - [x] Menambahkan skrip backup SQLite/MySQL + storage + environment.
 - [x] Menambahkan skrip health check API.
 - [x] Menyelesaikan audit kode/tabel lama dan prosedur cleanup aman di
-  `app/LEGACY_AUDIT.md`.
+  `react/LEGACY_AUDIT.md`.
 - [x] Menyelaraskan dokumentasi setup, environment, test, deployment, backup,
-  dan endpoint di `app/README.md`.
+  dan endpoint di `react/README.md`.
 
 ## Hasil verifikasi
 
 - [x] `npm test`: **3 file, 9 test lulus**.
 - [x] `npm run build`: **berhasil**, 1.606 modul ditransformasi.
 - [x] `npm audit --audit-level=high`: **0 vulnerability**.
-- [x] Parser PHP alternatif: syntax `app/backend.php` valid.
+- [x] Parser PHP alternatif: syntax `react/backend.php` valid.
 - [x] Integrasi nyata menggunakan runtime PHP 8.3 WebAssembly + PDO SQLite:
   health, login, access bootstrap, pengguna, jadwal, absensi masuk/pulang,
   upload/hapus logbook, perjalanan/peserta/konfirmasi/hapus, laporan, serta
@@ -135,7 +135,7 @@ pengelola dan tidak dapat diselesaikan hanya dari repository:
 - [ ] Menjalankan backup dan **uji restore**, lalu cut-over bertahap dengan
   monitoring health/error.
 - [ ] Setelah masa paralel disetujui dan rollback tidak lagi diperlukan:
-  arsipkan lalu hapus source/tabel lama sesuai `app/LEGACY_AUDIT.md`.
+  arsipkan lalu hapus source/tabel lama sesuai `react/LEGACY_AUDIT.md`.
 
 ## Rencana cut-over
 

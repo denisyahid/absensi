@@ -3,6 +3,11 @@
 Audit ini membedakan data yang masih dipakai API baru dan kode yang baru boleh
 dihapus setelah cut-over produksi.
 
+Letak kode sudah dipisah: kode aplikasi React/API berada di folder `react/`
+(root repository), sedangkan `app/` hanya berisi kode Laravel lama dengan
+namespace `App\`. Kode React tidak boleh dikembalikan ke dalam `app/` karena
+folder tersebut adalah root autoload PSR-4 Composer.
+
 ## Tabel yang dipakai backend React
 
 | Tabel | Pemakaian |
@@ -40,7 +45,7 @@ dihapus setelah cut-over produksi.
 Kode dan tabel lama **tidak dihapus pada tahap ini** karena penghapusan akan
 memutus rollback. Setelah React stabil di produksi dan backup tervalidasi:
 
-1. Jalankan `app/deploy/backup.sh`.
+1. Jalankan `react/deploy/backup.sh`.
 2. Pastikan arsip database dan `storage/app/public` dapat dipulihkan.
 3. Ekspor data `masuks`, `pulangs`, dan `datapegawais` bila masih dibutuhkan.
 4. Arsipkan commit Laravel lama dengan tag Git.

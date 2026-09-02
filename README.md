@@ -7,6 +7,37 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Struktur repository
+
+Aplikasi absensi ini berisi dua kode yang sengaja dipisahkan agar tidak
+tercampur:
+
+```text
+absensi/
+├── app/            → HANYA kode bawaan/legacy Laravel (namespace App\):
+│                     Http/, Livewire/, Models/, Providers/, View/
+├── bootstrap/      → bootstrap Laravel
+├── config/         → konfigurasi Laravel
+├── database/       → migration, factory, seeder Laravel
+├── resources/      → Blade view + asset Vite Laravel
+├── routes/         → route Laravel (web, auth, console)
+├── tests/          → PHPUnit/Pest test Laravel
+└── react/          → SEMUA kode aplikasi baru (di luar folder app/):
+    ├── src/        → frontend React JS + Vite
+    ├── index.html  → entry point SPA
+    ├── public/     → aset statis Vite (logo, tanda tangan)
+    ├── backend.php → API PHP mandiri (PDO, tanpa bootstrap Laravel)
+    ├── tests/      → smoke test HTTP API
+    ├── deploy/     → contoh vhost nginx/apache, backup, health check
+    ├── README.md   → dokumentasi cara menjalankan & men-deploy
+    └── LEGACY_AUDIT.md → audit tabel/kode lama untuk cut-over
+```
+
+`react/` tidak berada di bawah `app/` supaya folder `app/` tetap menjadi root
+autoload PSR-4 `App\` milik Laravel dan Composer tidak pernah memindai kode
+React. Detail menjalankan, menguji, dan men-deploy aplikasi React/API ada di
+[`react/README.md`](react/README.md).
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
