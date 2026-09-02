@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+    ServerName absensi.example.go.id
+    DocumentRoot /var/www/absensi/app/dist
+
+    <Directory /var/www/absensi/app/dist>
+        Options -Indexes
+        AllowOverride None
+        Require all granted
+        FallbackResource /index.html
+    </Directory>
+
+    Alias /backend.php /var/www/absensi/app/backend.php
+    <FilesMatch "^backend\.php$">
+        Require all granted
+        SetHandler "proxy:unix:/run/php/php8.3-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+
+    LimitRequestBody 12582912
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "same-origin"
+
+    ErrorLog ${APACHE_LOG_DIR}/absensi-error.log
+    CustomLog ${APACHE_LOG_DIR}/absensi-access.log combined
+</VirtualHost>

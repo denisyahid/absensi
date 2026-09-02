@@ -1,5 +1,7 @@
 /.phpunit.cache
 /node_modules
+/app/node_modules
+/app/dist
 /public/build
 /public/hot
 /public/storage
@@ -22,3 +24,6 @@ yarn-error.log
 /.vscode
 /.zed
 storage/*
+
+/backups
+/database/ci.sqlite
